@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <nav id="navbar-1">
+            <ul>
+                <li class="nav-btn">
+                    <a href="/" class="a-nav">Inicio</a>
+                </li>
+
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="login-section" class="login-container">
+            <form id="login-form" class="login-form" action="/api/user/login" method="POST">
+                <label class="login-label" for="username">Nombre de usuario:</label>
+                <input class="login-input" type="text" id="username" name="username" required>
+
+
+
+                <label class="login-label" for="password">Contraseña:</label>
+                <input class="login-input" type="password" id="password" name="password" required minlength="6">
+
+
+                <button id="form-btn" class="login-btn" type="submit">Entrar</button>
+
+            </form>
+
+        </section>
+    </main>
+    <footer>
+        <h2>Proyecto hecho por mi, para desarrollo propio </h2>
+        <p class="plink">Mi<a class="a-plink" href="">
+                github </a></p>
+    </footer>
+    <script src="login.js"></script>
+</body>
+
+</html>

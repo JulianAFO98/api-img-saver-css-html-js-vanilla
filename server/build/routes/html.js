@@ -13,4 +13,7 @@ htmlRouter.get("/", (_req, res) => {
 htmlRouter.get("/register", (_req, res) => {
     res.sendFile(path_1.default.join(pathDirectory_1.default, 'public/register.html'));
 });
+htmlRouter.get("/login", (_req, res) => {
+    res.sendFile(path_1.default.join(pathDirectory_1.default, 'public/login.html'));
+});
 exports.default = htmlRouter;

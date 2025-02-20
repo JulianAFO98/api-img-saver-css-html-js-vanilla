@@ -7,6 +7,9 @@ userRouter.post("/register", (req, res) => {
     userController.createUser(req, res)
 });
 
+userRouter.post("/login", (req, res) => {
+    userController.loginUser(req, res);
+})
 
 
 

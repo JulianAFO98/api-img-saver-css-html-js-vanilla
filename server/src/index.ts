@@ -6,7 +6,8 @@ import userRouter from "./routes/user";
 import htmlRouter from "./routes/html";
 import imgRouter from "./routes/img";
 import absolutePath from "./pathDirectory";
-import { url } from "inspector";
+import cookieParser from "cookie-parser";
+
 
 
 
@@ -15,6 +16,7 @@ import { url } from "inspector";
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(absolutePath, 'public')));
 app.disable('x-powered-by');

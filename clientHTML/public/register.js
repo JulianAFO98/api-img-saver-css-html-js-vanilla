@@ -90,6 +90,7 @@ const parseData = () => {
 
 
 
+
 regForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 

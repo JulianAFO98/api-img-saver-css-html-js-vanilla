@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = __importDefault(require("../services/user"));
 const user_2 = require("../schemas/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const salt = 10;
 class UserController {
     constructor() {
@@ -37,6 +38,7 @@ class UserController {
                 if (existingUserByEmail) {
                     return res.status(400).json({ msg: "El email ya está en uso" });
                 }
+                //VALIDAR QUE EXISTA EL EMAIL USANDO DNS
                 const safePass = yield bcrypt_1.default.hash(password, salt);
                 const result = yield user_1.default.createUser(username, email, safePass);
                 return res.status(201).json({ message: "Usuario creado exitosamente", result });
@@ -44,6 +46,33 @@ class UserController {
             catch (error) {
                 console.error("Error al crear el usuario:", error);
                 return res.status(500).json({ msg: "Error interno del servidor" });
+            }
+        });
+    }
+    static loginUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { username, password } = req.body;
+                const userData = yield user_1.default.getUserByUsername(username);
+                if (!userData)
+                    return res.status(400).json({ msg: "El usuario no existe" });
+                const token = jsonwebtoken_1.default.sign({ id: userData.id, username: userData.username }, process.env.JWT, {
+                    expiresIn: "1h"
+                });
+                const comparePassword = yield bcrypt_1.default.compare(password, userData.password);
+                if (!comparePassword) {
+                    return res.status(400).json({ msg: "Incorrect password" });
+                }
+                return res
+                    .cookie("access-token", token, {
+                    httpOnly: true,
+                    sameSite: "strict",
+                    maxAge: 1000 * 60 * 60
+                })
+                    .send({ userData, token });
+            }
+            catch (error) {
+                console.log(error);
             }
         });
     }

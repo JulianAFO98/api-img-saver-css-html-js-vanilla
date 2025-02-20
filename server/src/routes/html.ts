@@ -13,4 +13,8 @@ htmlRouter.get("/register", (_req, res) => {
     res.sendFile(path.join(absolutePath, 'public/register.html'));
 });
 
+htmlRouter.get("/login", (_req, res) => {
+    res.sendFile(path.join(absolutePath, 'public/login.html'));
+});
+
 export default htmlRouter;

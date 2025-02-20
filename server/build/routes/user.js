@@ -9,4 +9,7 @@ const userRouter = express_1.default.Router();
 userRouter.post("/register", (req, res) => {
     user_1.default.createUser(req, res);
 });
+userRouter.post("/login", (req, res) => {
+    user_1.default.loginUser(req, res);
+});
 exports.default = userRouter;
