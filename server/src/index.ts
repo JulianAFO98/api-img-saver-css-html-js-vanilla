@@ -5,9 +5,10 @@ import path from "path";
 import userRouter from "./routes/user";
 import htmlRouter from "./routes/html";
 import imgRouter from "./routes/img";
+import authRouter from "./routes/auth";
 import absolutePath from "./pathDirectory";
 import cookieParser from "cookie-parser";
-
+import multer from "multer";
 
 
 
@@ -22,10 +23,12 @@ app.use(express.static(path.join(absolutePath, 'public')));
 app.disable('x-powered-by');
 
 
+
+
 app.use("/api/user", userRouter);
 app.use('/', htmlRouter);
 app.use('/api/img', imgRouter);
-
+app.use("/api/auth", authRouter)
 
 const PORT = Number(process.env.PORT) ?? 5000;
 

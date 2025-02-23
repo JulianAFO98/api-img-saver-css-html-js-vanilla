@@ -11,6 +11,7 @@ const path_1 = __importDefault(require("path"));
 const user_1 = __importDefault(require("./routes/user"));
 const html_1 = __importDefault(require("./routes/html"));
 const img_1 = __importDefault(require("./routes/img"));
+const auth_1 = __importDefault(require("./routes/auth"));
 const pathDirectory_1 = __importDefault(require("./pathDirectory"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
@@ -22,6 +23,7 @@ app.disable('x-powered-by');
 app.use("/api/user", user_1.default);
 app.use('/', html_1.default);
 app.use('/api/img', img_1.default);
+app.use("/api/auth", auth_1.default);
 const PORT = (_a = Number(process.env.PORT)) !== null && _a !== void 0 ? _a : 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

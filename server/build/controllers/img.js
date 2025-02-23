@@ -54,14 +54,10 @@ class ImgController {
     }
     static uploadImg(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { image, user_id, description } = req.body;
+            const { image, user_id, description, tags } = req.body;
             const client = yield (0, database_1.default)();
             try {
-                if (!image) {
-                    return res.status(400).json({ error: "Faltan datos" });
-                }
-                const buffer = Buffer.from(image, "base64");
-                const result = yield client.query("INSERT INTO images (image_data,description,user_id) VALUES ($1,$2,$3) RETURNING id", [buffer, description, user_id]);
+                const result = yield client.query("INSERT INTO images (image_data,description,user_id) VALUES ($1,$2,$3) RETURNING id", [description, user_id]);
                 res.json({ message: "Imagen guardada", id: result.rows[0].id });
             }
             catch (error) {

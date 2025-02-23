@@ -17,14 +17,14 @@ const parseData = () => {
     return urlEncodedData;
 }
 
-const showLoginMessage = () => {
+const showLoginMessage = (username) => {
     regForm.style.display = "none";
     const loginMessage = document.createElement("h1");
     const div = document.createElement("div");
     div.className = "login-form";
     loginMessage.id = "logged-msg";
     loginMessage.className = "logged";
-    loginMessage.textContent = "You succesfully logged,redirecting to home";
+    loginMessage.textContent = `Welcome ${username},redirecting to home`;
     document.getElementById("login-section").appendChild(div).appendChild(loginMessage);
 
     setTimeout(() => {
@@ -49,8 +49,8 @@ regForm.addEventListener("submit", async (event) => {
         if (!response.ok) {
             throw new Error("User login error");
         }
-        showLoginMessage();
-
+        const data = await response.json();
+        showLoginMessage(data);
 
     } catch (error) {
         console.log(error);

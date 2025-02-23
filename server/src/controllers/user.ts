@@ -59,16 +59,18 @@ class UserController {
             const token = jwt.sign(
                 { id: userData.id, username: userData.username },
                 process.env.JWT as string,
+
                 {
                     expiresIn: "1h"
                 });
-            return res
-                .cookie("access-token", token, {
-                    httpOnly: true,
-                    sameSite: "strict",
-                    maxAge: 1000 * 60 * 60
-                })
-                .send({ userData, token });
+            res.cookie("access-token", token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                maxAge: 1000 * 60 * 60,
+                path: "/"
+            });
+            return res.json(userData.username);
         } catch (error) {
             console.log(error);
             return res.status(500).json({ msg: "Error en el servidor" });

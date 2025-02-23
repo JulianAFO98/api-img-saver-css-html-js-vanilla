@@ -56,23 +56,25 @@ class UserController {
                 const userData = yield user_1.default.getUserByUsername(username);
                 if (!userData)
                     return res.status(400).json({ msg: "El usuario no existe" });
-                const token = jsonwebtoken_1.default.sign({ id: userData.id, username: userData.username }, process.env.JWT, {
-                    expiresIn: "1h"
-                });
                 const comparePassword = yield bcrypt_1.default.compare(password, userData.password);
                 if (!comparePassword) {
                     return res.status(400).json({ msg: "Incorrect password" });
                 }
-                return res
-                    .cookie("access-token", token, {
+                const token = jsonwebtoken_1.default.sign({ id: userData.id, username: userData.username }, process.env.JWT, {
+                    expiresIn: "1h"
+                });
+                res.cookie("access-token", token, {
                     httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
                     sameSite: "strict",
-                    maxAge: 1000 * 60 * 60
-                })
-                    .send({ userData, token });
+                    maxAge: 1000 * 60 * 60,
+                    path: "/"
+                });
+                return res.json(userData.username);
             }
             catch (error) {
                 console.log(error);
+                return res.status(500).json({ msg: "Error en el servidor" });
             }
         });
     }
