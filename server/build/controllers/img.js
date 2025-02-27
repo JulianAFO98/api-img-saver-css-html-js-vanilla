@@ -40,7 +40,7 @@ class ImgController {
     static getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const imgData = yield img_1.default.getAll();
+                const imgData = yield img_1.default.getAll(); // Abierto a cambios, es necesario enviar esa informacion??
                 if (!imgData) {
                     return res.status(404).json({ msg: "Al parecer no hay imagenes" });
                 }
@@ -54,13 +54,24 @@ class ImgController {
     }
     static uploadImg(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { image, user_id, description, tags } = req.body;
+            const { user_id, description, tags } = req.body; // TODO : VALIDAR INFO ENTRANTE
+            if (!req.file) {
+                return res.status(400).json({ msg: "You need to upload a image" });
+            }
+            const { filename } = req.file;
+            const img_url = `/uploads/${filename}`;
+            const parsedtags = JSON.parse(tags);
             const client = yield (0, database_1.default)();
+            console.log(tags);
             try {
-                const result = yield client.query("INSERT INTO images (image_data,description,user_id) VALUES ($1,$2,$3) RETURNING id", [description, user_id]);
-                res.json({ message: "Imagen guardada", id: result.rows[0].id });
+                const insertImg = yield client.query("INSERT INTO images (user_id,description,img_url) VALUES ($1,$2,$3) RETURNING id", [user_id, description, img_url]);
+                const getTags = yield client.query("SELECT * FROM tags WHERE tag_name = ANY($1)", [parsedtags]);
+                console.log(getTags);
+                res.json({ message: "Imagen guardada" });
             }
             catch (error) {
+                console.error("Error al guardar la imagen:", error);
+                res.status(500).json({ msg: "Error interno del servidor" });
             }
         });
     }

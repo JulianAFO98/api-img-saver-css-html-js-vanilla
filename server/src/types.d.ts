@@ -2,9 +2,8 @@ import { Request } from "express";
 
 export type ImgData = {
     id: string;
-    user_id: string;
     description: string;
-    img_data: Buffer;
+    img_url: string;
 } // CAMBIAR
 
 export interface UserData {

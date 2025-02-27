@@ -36,7 +36,7 @@ class ImgController {
     static async getAll(req: Request, res: Response) {
 
         try {
-            const imgData: ImgData[] | null = await imgService.getAll();
+            const imgData: ImgData[] | null = await imgService.getAll(); // Abierto a cambios, es necesario enviar esa informacion??
 
             if (!imgData) {
                 return res.status(404).json({ msg: "Al parecer no hay imagenes" });
@@ -50,17 +50,30 @@ class ImgController {
     }
 
     static async uploadImg(req: Request, res: Response) {
-        const { image, user_id, description, tags } = req.body;
+        const { user_id, description, tags } = req.body; // TODO : VALIDAR INFO ENTRANTE
+
+        if (!req.file) {
+            return res.status(400).json({ msg: "You need to upload a image" });
+        }
+        const { filename } = req.file;
+        const img_url = `/uploads/${filename}`;
+        const parsedtags = JSON.parse(tags);
         const client = await connectDB();
+        console.log(tags);
         try {
-
-            const result = await client.query(
-                "INSERT INTO images (image_data,description,user_id) VALUES ($1,$2,$3) RETURNING id",
-                [description, user_id]
+            const insertImg = await client.query(
+                "INSERT INTO images (user_id,description,img_url) VALUES ($1,$2,$3) RETURNING id",
+                [user_id, description, img_url]
             );
-            res.json({ message: "Imagen guardada", id: result.rows[0].id });
+            const getTags = await client.query(
+                "SELECT * FROM tags WHERE tag_name = ANY($1)",
+                [parsedtags]
+            );
+            console.log(getTags); // FALTA TERMINAR 
+            res.json({ message: "Imagen guardada" });
         } catch (error) {
-
+            console.error("Error al guardar la imagen:", error);
+            res.status(500).json({ msg: "Error interno del servidor" });
         }
     }
 

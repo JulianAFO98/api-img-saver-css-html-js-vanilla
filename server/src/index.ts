@@ -20,15 +20,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(absolutePath, 'public')));
-app.disable('x-powered-by');
-
-
-
-
+app.use("/uploads", express.static("uploads"));
 app.use("/api/user", userRouter);
 app.use('/', htmlRouter);
 app.use('/api/img', imgRouter);
 app.use("/api/auth", authRouter)
+app.disable('x-powered-by');
 
 const PORT = Number(process.env.PORT) ?? 5000;
 

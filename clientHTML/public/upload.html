@@ -21,11 +21,25 @@
     </header>
     <main>
         <section class="register-container">
-            <form id="upload-form" class="upload-form" action="/api/img/upload" method="POST">
+            <form id="upload-form-id" class="upload-form" action="/api/img/upload" method="POST"
+                enctype="multipart/form-data">
+                <div class="file-container">
+                    <input id="img-id" type="file" name="imagen" required>
+                </div>
+                <div class="options-container">
+                    <label class="tag-text" for="tags">Agregue los tags: </label>
+                    <select id="tags" class="select-tags" name="tag">
+                        <option value="cat">cat</option>
+                        <option value="dog">dog</option>
+                        <option value="another">another</option>
+                    </select>
+                    <button id="add-tag-btn" class="tag-btn" type="button">Agregar tag</button>
+                </div>
+                <div id="tag-list" class="tag-container">
 
-
+                </div>
+                <button type="submit">Subir Archivo</button>
             </form>
-
         </section>
     </main>
     <footer>
@@ -34,7 +48,7 @@
                 github </a></p>
     </footer>
     <script></script>
-    <script src="logged.js"></script>
+    <script src="upload.js"></script>
 </body>
 
 </html>

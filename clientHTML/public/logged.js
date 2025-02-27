@@ -1,12 +1,11 @@
+
 const navIndex = document.getElementById("navbar-1")
 
 const changeNavIfLogged = async () => {
     try {
         const request = await fetch("/api/auth/me");
         if (!request.ok) throw new Error("No autenticado");
-
         const userdata = await request.json();
-
         if (userdata.username) {
             navIndex.innerHTML = ` 
             <ul>

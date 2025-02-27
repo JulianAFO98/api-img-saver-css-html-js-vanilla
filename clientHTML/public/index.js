@@ -24,8 +24,8 @@ const showImages = async () => {
     const images = await fetchRandomImages();
     let html = "";
     images.forEach(image => {
-        const { id, url } = image;
-        html += `<div class=img-container><img id="${id}"src="${url}" alt="cat number ${id}" class="img-shown"></div>`;
+        const { id, img_url } = image;
+        html += `<div class=img-container><img id="${id}"src="${window.location.origin + img_url}" alt="cat number ${id}" class="img-shown"></div>`;
     });
     randomImgContainer.innerHTML = html;
 };

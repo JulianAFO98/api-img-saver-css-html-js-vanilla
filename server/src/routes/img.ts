@@ -15,9 +15,7 @@ imgRouter.get("/", (req, res) => {
 });
 
 imgRouter.post("/upload", upload.single("imagen"), (req, res) => {
-    console.log(req.file);
-    //imgController.uploadImg(req, res);
-    res.json({ msg: "imagen Subida" });
+    imgController.uploadImg(req, res);
 });
 
 

@@ -187,7 +187,7 @@ footer {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
+    padding: 30px;
     width: 50%;
     height: 70vh;
     background-color: white;
@@ -225,6 +225,49 @@ footer {
     text-align: center;
 }
 
+.tag-text {
+    color: #f12711;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.select-tags {
+    width: 40%;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 15px;
+    text-align: center;
+    border-color: orangered;
+}
+
+.file-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 40%;
+    border-style: dashed;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 80%;
+    height: 20%;
+
+}
+
+.tag-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 20%;
+
+}
 
 
 .reg-btn,
@@ -240,9 +283,35 @@ footer {
 
 }
 
+.tag-btn {
+    border-radius: 30px;
+    width: 30%;
+    height: 20%;
+    background-color: black;
+    color: orangered;
+    font-size: 10px;
+    cursor: pointer;
+}
+
 .form-error {
     color: red;
     font-size: small;
+}
+
+.tag {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    width: auto;
+    height: auto;
+    color: black;
+    background-color: orangered;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.tag-list {
+    display: flex;
 }
 
 .hidden {
